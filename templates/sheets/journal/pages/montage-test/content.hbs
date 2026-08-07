@@ -1,0 +1,15 @@
+{{!-- <!-- eslint-disable @html-eslint/require-closing-tags --> --}}
+{{!-- <!-- eslint-disable @html-eslint/indent --> --}}
+{{!-- <!-- eslint-disable @stylistic/indent --> --}}
+<section>
+  {{#if title.show}}
+  <header class="journal-page-header">
+    <h{{ title.level }}>
+      {{ name }}
+    </h{{ title.level }}>
+  </header>
+  {{/if}}
+
+  <p>Success Limit: {{systemFields.details.successLimit}}</p>
+  <p>Failure Limit: {{systemFields.details.failureLimit}}</p>
+</section>

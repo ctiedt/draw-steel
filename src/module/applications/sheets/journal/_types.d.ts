@@ -1,8 +1,14 @@
-import { ConfigurationModel, DrawSteelImageModel, ReferenceModel } from "../../../data/journal-entry-pages/_module.mjs";
+import { ConfigurationModel, DrawSteelImageModel, MontageTestModel, ReferenceModel } from "../../../data/journal-entry-pages/_module.mjs";
 
 declare module "./config-page.mjs" {
   export default interface DrawSteelImageSheet extends foundry.applications.api.DocumentSheet {
     document: foundry.documents.JournalEntryPage & { system: ConfigurationModel };
+  }
+}
+
+declare module "./montage-test-page.mjs" {
+  export default interface DrawSteelImageSheet extends foundry.applications.api.DocumentSheet {
+    document: foundry.documents.JournalEntryPage & { system: MontageTestModel };
   }
 }
 

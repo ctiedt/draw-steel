@@ -1,0 +1,10 @@
+{{formGroup systemFields.successLimit value=system.successLimit disabled=isPlay}}
+{{formGroup systemFields.failureLimit value=system.failureLimit disabled=isPlay}}
+{{#if isPlay}}
+{{> "systems/draw-steel/templates/embeds/item/montageTest.hbs"}}
+{{else}}
+<button type="button" data-action="addChallenge">Add challenge</button>
+{{#each challenges as |challenge|}}
+{{challenge}}
+{{/each}}
+{{/if}}
