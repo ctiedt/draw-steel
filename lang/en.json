@@ -1972,7 +1972,9 @@
         "tooltip": "Tooltip",
         "tier1": "Tier 1",
         "tier2": "Tier 2",
-        "tier3": "Tier 3"
+        "tier3": "Tier 3",
+        "details": "Details",
+        "challenges": "Challenges"
       },
       "configuration": {
         "FIELDS": {
@@ -2025,6 +2027,22 @@
             "label": "Art Description",
             "hint": "The Art Description fills in the alt text attribute of the image, improving accessibility for screen readers and helping viewers discover new elements within an image if they are ambiguous, unfamiliar, or framed in an atypical way."
           }
+        }
+      },
+      "montageTest": {
+        "FIELDS": {
+          "details": {
+            "label": "Details",
+            "successLimit": {
+              "label": "Success Limit",
+              "hint": "The number of successes to complete the test."
+            },
+            "failureLimit": {
+              "label": "Failure Limit",
+              "hint": "The number of failures after which the test is failed."
+            }
+          },
+          "label": "Montage Test"
         }
       },
       "reference": {
@@ -2559,6 +2577,7 @@
       },
       "JournalEntryPage": {
         "configuration": "An easy way to configure homebrew elements like languages and monster keywords.",
+        "montageTest": "A template for montage tests.",
         "reference": "An extensions of a text page that allows for rich tooltips.",
         "tierOutcome": "A page for configuring reusable power roll outcomes that can be embedded."
       }
@@ -2582,6 +2601,7 @@
     },
     "JournalEntryPage": {
       "configuration": "Configuration",
+      "montageTest": "Montage Test",
       "reference": "Reference",
       "tierOutcome": "Power Roll Tier Outcomes"
     },

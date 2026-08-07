@@ -194,6 +194,11 @@ Hooks.once("init", function () {
   );
   DocumentSheetConfig.registerSheet(
     foundry.documents.JournalEntryPage, DS_CONST.systemID,
+    applications.sheets.journal.MontageTestPage,
+    { makeDefault: true, types: ["montageTest"] },
+  );
+  DocumentSheetConfig.registerSheet(
+    foundry.documents.JournalEntryPage, DS_CONST.systemID,
     applications.sheets.journal.ReferencePage,
     { makeDefault: true, types: ["reference"] },
   );
