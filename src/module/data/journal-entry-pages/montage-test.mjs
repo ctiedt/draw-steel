@@ -1,4 +1,4 @@
-const { ArrayField, NumberField, SchemaField, StringField } = foundry.data.fields;
+const { ArrayField, NumberField, SchemaField, StringField, HTMLField } = foundry.data.fields;
 
 export default class MontageTestModel extends foundry.abstract.TypeDataModel {
 /** Metadata for this JournalEntryPage subtype.
@@ -16,12 +16,20 @@ export default class MontageTestModel extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     return {
       details: new SchemaField({
-        successLimit: new NumberField({ required: true }),
-        failureLimit: new NumberField({ required: true }),
+        successLimit: new NumberField({ required: true, initial: 5 }),
+        failureLimit: new NumberField({ required: true, initial: 5 }),
+        description: new HTMLField({ required: true }),
       }),
       challenges: new ArrayField(new SchemaField({
         title: new StringField({ required: true }),
+        status: new StringField({ required: true }),
+        suggestedCharacteristics: new ArrayField(new StringField({ required: true })),
       })),
+      outcomes: new SchemaField({
+        totalSuccess: new HTMLField({ required: true }),
+        partialSuccess: new HTMLField({ required: true }),
+        totalFailure: new HTMLField({ required: true }),
+      }),
     };
   }
 

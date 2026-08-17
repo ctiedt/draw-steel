@@ -10,6 +10,34 @@
   </header>
   {{/if}}
 
-  <p>Success Limit: {{systemFields.details.successLimit}}</p>
-  <p>Failure Limit: {{systemFields.details.failureLimit}}</p>
+  <p>Success Limit: {{system.details.successLimit}}</p>
+  <p>Failure Limit: {{system.details.failureLimit}}</p>
+
+  <h2>Description</h2>
+  {{{system.details.description}}}
+
+  <div class="flexrow">
+    <button data-action="showOutcome" data-outcome="totalSuccess">Show Total Success Outcome</button>
+    <button data-action="showOutcome" data-outcome="partialSuccess">Show Partial Success Outcome</button>
+    <button data-action="showOutcome" data-outcome="totalFailure">Show Total Failure Outcome</button>
+  </div>
+
+  <h2>Challenges</h2>
+  {{#each system.challenges as |challenge|}}
+  <fieldset class="flexrow">
+    <legend>{{title}} {{ds-test-status status}}</legend>
+    <h3>{{title}}</h3>
+    {{#each suggestedCharacteristics as |chr|}}
+      <button
+        data-action="roll"
+        data-roll-type="characteristic"
+        data-characteristic="{{chr}}"
+        data-index="{{@../index}}"
+        data-tooltip-text="{{localize "DRAW_STEEL.ROLL.Prompt" prompt=chr.field.label}}"
+      >
+         <i inert="" class="fa-solid fa-dice-d10"></i> {{chr}}
+      </button>
+    {{/each}}
+    </fieldset>
+  {{/each}}
 </section>

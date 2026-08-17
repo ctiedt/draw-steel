@@ -2,13 +2,21 @@
 <fieldset>
   <div class="form-group">
     <div class="form-group" data-tooltip-text="{{fields.successLimit.hint}}">
-      <label>{{fields.successLimit.label}}</label>
-      <p>{{fields.successLimit}}</p>
+      <label>{{details.fields.successLimit.label}}</label>
         <div class="form-fields">
-          {{formInput fields.successLimit value=values.successLimit}}
+          {{formInput details.fields.successLimit value=system.details.successLimit name="system.details.successLimit"}}
+        </div>
+      </label>
+    </div>
+    <div class="form-group" data-tooltip-text="{{fields.failureLimit.hint}}">
+      <label>{{details.fields.failureLimit.label}}</label>
+        <div class="form-fields">
+          {{formInput details.fields.failureLimit value=system.details.failureLimit name="system.details.failureLimit"}}
         </div>
       </label>
     </div>
   </div>
 </fieldset>
+<prose-mirror name="system.details.description" class="journal-page-content" value="{{system.details.description}}"
+    data-document-uuid="{{ uuid }}" collaborate></prose-mirror>
 </section>

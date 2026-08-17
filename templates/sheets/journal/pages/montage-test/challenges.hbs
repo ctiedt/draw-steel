@@ -1,2 +1,42 @@
-<div>
-</div>
+<section class="standard-form tab {{tabs.challenges.cssClass}}" data-tab="challenges" data-group="primary">
+  <div class="form-group">
+    <button type="button" data-action="addChallenge" data-path="challenges">
+      <i class="fa-solid fa-plus" inert></i>
+      {{localize "DRAW_STEEL.JournalEntryPage.montageTest.addChallenge"}}
+    </button>
+  </div>
+  <div class="scrollable">
+    {{#each challenges}}
+    <fieldset>
+    <legend>
+        <button type="button" data-action="removeChallenge" data-path="challenges" data-index="{{@index}}">
+          <i class="fa-solid fa-trash" inert></i>
+          {{localize "DRAW_STEEL.JournalEntryPage.montageTest.removeChallenge"}}
+        </button>
+      </legend>
+      <div class="form-group">
+        <div class="form-group" data-tooltip-text="{{fields.title.hint}}">
+          <label>{{fields.title.label}}</label>
+          <div class="form-fields">
+            {{formInput fields.title value=values.title name=names.title}}
+          </div>
+        </div>
+        <div class="form-group" data-tooltip-text="{{fields.status.hint}}">
+          <label>{{fields.status.label}}</label>
+          <select name={{names.status}}>
+            {{selectOptions statusOptions selected=values.status localize=true}}
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group" data-tooltip-text="{{fields.suggestedCharacteristics.hint}}">
+          <label>{{fields.suggestedCharacteristics.label}}</label>
+          <select name={{names.suggestedCharacteristics}} multiple>
+            {{selectOptions charOptions selected=values.suggestedCharacteristics localize=true}}
+          </select>
+        </div>
+      </div>
+    </fieldset>
+    {{/each}}
+  </div>
+</section>

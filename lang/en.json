@@ -1974,7 +1974,8 @@
         "tier2": "Tier 2",
         "tier3": "Tier 3",
         "details": "Details",
-        "challenges": "Challenges"
+        "challenges": "Challenges",
+        "outcomes": "Outcomes"
       },
       "configuration": {
         "FIELDS": {
@@ -2042,7 +2043,31 @@
               "hint": "The number of failures after which the test is failed."
             }
           },
+          "challenges": {
+            "label": "Challenges",
+            "element": {
+              "title": {
+                "label": "Title",
+                "hint": "A short name for the challenge."
+              },
+              "status": {
+                "label": "Status",
+                "hint": "The status of this challenge."
+              },
+              "suggestedCharacteristics": {
+                "label": "Suggested Characteristics",
+                "hint": "Characteristics applicable to this challenge."
+              }
+            }
+          },
           "label": "Montage Test"
+        },
+        "addChallenge": "Add Challenge",
+        "removeChallenge": "Remove Challenge",
+        "status": {
+          "notAttempted": "Not Attempted",
+          "succeeded": "Succeeded",
+          "failed": "Failed"
         }
       },
       "reference": {
