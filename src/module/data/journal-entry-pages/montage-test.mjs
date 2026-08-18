@@ -36,6 +36,29 @@ export default class MontageTestModel extends foundry.abstract.TypeDataModel {
   /** @inheritdoc */
   static LOCALIZATION_PREFIXES = ["DRAW_STEEL.JournalEntryPage.montageTest"];
 
+  /** Number of successes. */
+  successes() {
+    return this.challenges.filter((ch) => ch.status === "succeeded").length;
+  }
+
+  /** Number of failures. */
+  failures() {
+    return this.challenges.filter((ch) => ch.status === "failed").length;
+  }
+
+  /** Outcome, based on number of succeeded and failed challenges. */
+  outcome() {
+    const successes = this.successes();
+    const failures = this.failures();
+    if ((successes >= this.details.successLimit) && (failures < this.details.failureLimit)) {
+      return "totalSuccess";
+    } else if ((successes - failures) >= 2) {
+      return "partialSuccess";
+    } else {
+      return "totalFailure";
+    }
+  }
+
   /** @inheritdoc */
   async toEmbed(config, options = {}) {
     return this.parent._embedTextPage(config, options);

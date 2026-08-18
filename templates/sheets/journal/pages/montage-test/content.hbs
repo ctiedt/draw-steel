@@ -16,11 +16,11 @@
   <h2>Description</h2>
   {{{system.details.description}}}
 
-  <div class="flexrow">
+  <!--<div class="flexrow">
     <button data-action="showOutcome" data-outcome="totalSuccess">Show Total Success Outcome</button>
     <button data-action="showOutcome" data-outcome="partialSuccess">Show Partial Success Outcome</button>
     <button data-action="showOutcome" data-outcome="totalFailure">Show Total Failure Outcome</button>
-  </div>
+  </div>-->
 
   <h2>Challenges</h2>
   {{#each system.challenges as |challenge|}}
@@ -40,4 +40,6 @@
     {{/each}}
     </fieldset>
   {{/each}}
+
+  <button data-action="completeMontage">Complete Montage Test</button>
 </section>

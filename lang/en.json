@@ -2062,6 +2062,26 @@
           },
           "label": "Montage Test"
         },
+        "completeMontage": {
+          "showOutcome": {
+            "label": "Show outcome in chat?"
+          },
+          "outcome": {
+            "label": "Outcome",
+            "hint": "How did the montage test end for the heroes?"
+          }
+        },
+        "outcome": {
+          "totalSuccess": {
+            "label": "Total Success"
+          },
+          "partialSuccess": {
+            "label": "Partial Success"
+          },
+          "totalFailure": {
+            "label": "Total Failure"
+          }
+        },
         "addChallenge": "Add Challenge",
         "removeChallenge": "Remove Challenge",
         "status": {

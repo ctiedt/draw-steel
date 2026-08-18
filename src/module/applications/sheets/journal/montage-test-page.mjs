@@ -1,5 +1,5 @@
-import { systemPath } from "../../../constants.mjs";
 import { DrawSteelChatMessage } from "../../../documents/_module.mjs";
+import { systemPath } from "../../../constants.mjs";
 
 export default class MontageTestPage extends foundry.applications.sheets.journal.JournalEntryPageHandlebarsSheet {
   /** @inheritdoc */
@@ -9,7 +9,7 @@ export default class MontageTestPage extends foundry.applications.sheets.journal
       addChallenge: this.#addChallenge,
       removeChallenge: this.#removeChallenge,
       roll: this.#roll,
-      showOutcome: this.#showOutcome,
+      completeMontage: this.#completeMontage,
     },
   };
 
@@ -127,7 +127,6 @@ export default class MontageTestPage extends foundry.applications.sheets.journal
    */
   static async #removeChallenge(event, target) {
     const { path, index } = target.dataset;
-    console.log(target);
 
     const updatedArray = this.document.system[path].splice(index, 1);
 
@@ -160,7 +159,14 @@ export default class MontageTestPage extends foundry.applications.sheets.journal
               result = "succeeded";
               break;
           }
-          this.document.system.challenges[parseInt(index)].status = result;
+          const updatedChallenges = this.document.system.challenges;
+          updatedChallenges[parseInt(index)].status = result;
+          console.log(updatedChallenges);
+          this.document.update({
+            system: {
+              challenges: updatedChallenges,
+            },
+          });
           this.render();
         }
       }
@@ -168,22 +174,69 @@ export default class MontageTestPage extends foundry.applications.sheets.journal
   }
 
   /**
-   * Show an outcome as a chat message.
+   * Complete a montage test, showing the outcome and awarding victories.
    *
    * @this MontageTestPage
    * @param {PointerEvent} event   The originating click event.
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action].
    */
-  static async #showOutcome(event, target) {
-    let { outcome } = target.dataset;
-    if (outcome === "totalSuccess") {
-      await DrawSteelChatMessage.create({ title: "Total Success", content: this.document.system.outcomes.totalSuccess });
-    }
-    else if (outcome === "partialSuccess") {
-      await DrawSteelChatMessage.create({ title: "Partial Success", content: this.document.system.outcomes.partialSuccess });
-    }
-    else if (outcome === "totalFailure") {
-      await DrawSteelChatMessage.create({ title: "Total Failure", content: this.document.system.outcomes.totalFailure });
+  static async #completeMontage(event, target) {
+    const content = document.createElement("div");
+
+    const victoryGroup = foundry.applications.fields.createFormGroup({
+      label: "DRAW_STEEL.Combat.CompleteEncounter.AwardVictories.label",
+      hint: "DRAW_STEEL.Combat.CompleteEncounter.AwardVictories.hint",
+      // TODO: Once encounter difficulty math is implemented, default victory value to the victories for that difficulty
+      input: foundry.applications.fields.createNumberInput({ name: "victories", value: 1 }),
+      localize: true,
+    });
+
+    const showOutcome = foundry.applications.fields.createFormGroup({
+      label: "DRAW_STEEL.JournalEntryPage.montageTest.completeMontage.showOutcome.label",
+      input: foundry.applications.fields.createCheckboxInput({ name: "showOutcome", value: true }),
+      classes: ["slim"],
+      localize: true,
+    });
+
+    const outcomes = foundry.applications.fields.createFormGroup({
+      label: "DRAW_STEEL.JournalEntryPage.montageTest.completeMontage.outcome.label",
+      hint: "DRAW_STEEL.JournalEntryPage.montageTest.completeMontage.outcome.hint",
+      input: foundry.applications.fields.createSelectInput({
+        name: "outcome",
+        options: [
+          { value: "totalSuccess", label: "DRAW_STEEL.JournalEntryPage.montageTest.outcome.totalSuccess.label" },
+          { value: "partialSuccess", label: "DRAW_STEEL.JournalEntryPage.montageTest.outcome.partialSuccess.label" },
+          { value: "totalFailure", label: "DRAW_STEEL.JournalEntryPage.montageTest.outcome.totalFailure.label" },
+        ],
+        value: this.document.system.outcome(),
+        localize: true,
+      }),
+      localize: true,
+    });
+
+    content.append(victoryGroup, showOutcome, outcomes);
+    const fd = await ds.applications.api.DSDialog.input({
+      content,
+      classes: ["complete-montage"],
+      window: {
+        title: "DRAW_STEEL.Combat.CompleteEncounter.Title",
+      },
+    });
+
+    if (fd) {
+      if (fd.showOutcome) {
+        switch (fd.outcome) {
+          case "totalSuccess":
+            await DrawSteelChatMessage.create({ title: _loc("DRAW_STEEL.JournalEntryPage.montageTest.outcome.totalSuccess.label"), content: this.document.system.outcomes.totalSuccess });
+            break;
+          case "partialSuccess":
+            await DrawSteelChatMessage.create({ title: _loc("DRAW_STEEL.JournalEntryPage.montageTest.outcome.partialSuccess.label"), content: this.document.system.outcomes.partialSuccess });
+            break;
+          case "totalFailure":
+            await DrawSteelChatMessage.create({ title: _loc("DRAW_STEEL.JournalEntryPage.montageTest.outcome.totalFailure.label"), content: this.document.system.outcomes.totalFailure });
+            break;
+        }
+      }
     }
   }
 }
